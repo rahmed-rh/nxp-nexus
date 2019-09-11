@@ -1,0 +1,9 @@
+- name: "nxp-nexus-apb playbook to provision the application"
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    apb_action: provision
+    nexus_state: present
+  roles:
+    - role: ocp_deploy_nexus

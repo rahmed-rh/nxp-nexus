@@ -1,0 +1,70 @@
+version: '1.0.0'
+name: nxp-nexus-apb
+description: This APB deploys Nexus according to NXP standards and default configurations
+bindable: False
+async: unsupported 
+metadata:
+  documentationUrl: <link_to_documentation>
+  imageUrl: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.png
+  dependencies: ['registry.connect.redhat.com/sonatype/nexus-repository-manager']
+  displayName: NXP Nexus App (APB)
+  longDescription: NXP Nexus (APB)
+  providerDisplayName: "Red Hat Consulting"
+plans:
+  - name: default
+    description: A short description of what this plan does
+    free: True
+    metadata:
+      displayName: Default
+      longDescription: A longer description of what this plan deploys
+      cost: $0.00
+    parameters:
+      - name: nexus_service_account
+        required: true
+        default: nexus
+        type: string
+        title: Nexus Service Account
+        display_group: project
+      - name: nexus_volume_size
+        required: true
+        default: 5Gi
+        type: string
+        title: Nexus Volume Size
+        display_group: project
+      - name: nexus_memory_request
+        required: true
+        default: 1Gi
+        type: string
+        title: Nexus Memory Request
+        display_group: project
+      - name: nexus_memory_limit
+        required: true
+        default: 2Gi
+        type: string
+        title: Nexus Memory Limit
+        display_group: project
+      - name: nexus_cpu_request
+        required: true
+        default: 500m
+        type: string
+        title: Nexus CPU Request
+        display_group: project
+      - name: nexus_cpu_limit
+        required: true
+        default: 2
+        type: string
+        title: Nexus CPU Limit
+        display_group: project
+      - name: nexus_ssl
+        required: false
+        default: True
+        type: string
+        title: Nexus SSL Enabled
+        display_group: nexus
+      - name: nexus_admin_password
+        required: true
+        default: passw0rd
+        type: string
+        title: Nexus Admin Password
+        display_group: nexus
+      
