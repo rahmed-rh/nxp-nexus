@@ -96,8 +96,6 @@
           name: nexus
           securityContext:
             fsGroup: 1000340000
-            seLinuxOptions:
-              level: s0:c18,c17
           serviceAccount: "{{ _nexus_service_account }}"
           ports:
           - containerPort: 8081
