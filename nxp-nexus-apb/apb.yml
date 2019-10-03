@@ -2,7 +2,6 @@ version: '1.0.0'
 name: nxp-nexus-apb
 description: This APB deploys Nexus according to NXP standards and default configurations.
 bindable: False
-async: optional 
 metadata:
   documentationUrl: <link_to_documentation>
   imageUrl: https://nxp.com/assets/images/en/logos-internal/NXP_logo.png
