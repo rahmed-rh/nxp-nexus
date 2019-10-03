@@ -1,14 +1,14 @@
 version: '1.0.0'
 name: nxp-nexus-apb
-description: This APB deploys Nexus according to NXP standards and default configurations
+description: This APB deploys Nexus according to NXP standards and default configurations.
 bindable: False
 async: unsupported 
 metadata:
   documentationUrl: <link_to_documentation>
-  imageUrl: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.png
+  imageUrl: https://nxp.com/assets/images/en/logos-internal/NXP_logo.png
   dependencies: ['registry.connect.redhat.com/sonatype/nexus-repository-manager']
-  displayName: NXP Nexus App (APB)
-  longDescription: NXP Nexus (APB)
+  displayName: NXP Nexus Environment 
+  longDescription: This will install an NXP Nexus supported deployment according to NXP standard configuration and versions. Please refer to it@nxp for any information
   providerDisplayName: "Red Hat Consulting"
 plans:
   - name: default
