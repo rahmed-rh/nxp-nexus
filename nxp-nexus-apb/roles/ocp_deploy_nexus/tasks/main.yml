@@ -5,7 +5,7 @@
     msg: "_nexus_volume_size: {{ nexus_volume_size }}, _nexus_ssl: {{ nexus_ssl }}"
 - name: Debug parameters things
   debug:
-    msg: "_nexus_state: {{ _nexus_state }}, _nexus_service_account: {{ _nexus_service_account }}, _nexus_cpu_request: {{ _nexus_cpu_request }}, _nexus_memory_request: {{ _nexus_memory_request }}, _nexus_cpu_limit: {{ _nexus_cpu_limit }}, _nexus_memory_limit: {{ _nexus_memory_limit }}"
+    msg: "_nexus_state: {{ _nexus_state }}, _nexus_service_account: {{ _nexus_service_account }}, _nexus_cpu_request: {{ _nexus_cpu_request }}, _nexus_memory_request: {{ _nexus_memory_request }}, _nexus_cpu_limit: {{ _nexus_cpu_limit }}, _nexus_memory_limit: {{ _nexus_memory_limit }},_new_nexus_admin_password: {{ _new_nexus_admin_password }}"
 
 - name: Set Nexus Service to {{ _nexus_state }}
   k8s:
@@ -62,85 +62,6 @@
     state: "{{ _nexus_state }}"
     definition: "{{ lookup('template', './templates/nexus_registry_route.j2') | from_yaml }}"
 
-- name: Set Nexus PersistentVolumeClaim to {{ _nexus_state }}
-  k8s:
-    state: "{{ _nexus_state }}"
-    definition:
-      kind: PersistentVolumeClaim
-      apiVersion: v1
-      metadata:
-        name: "{{ _nexus_name }}-pvc"
-        namespace: "{{ _nexus_namespace }}"
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: "{{ _nexus_volume_size }}"
-
-- name: Set Nexus Pod to {{ _nexus_state }}
-  k8s:
-    state: "{{ _nexus_state }}"
-    definition:
-      apiVersion: v1
-      kind: Pod
-      metadata:
-        name: "{{ _nexus_name }}"
-        namespace: "{{ _nexus_namespace }}"
-        labels:
-          app: "{{ _nexus_name }}"
-      spec:
-        containers:
-        - image: "{{ _nexus_image }}:{{ _nexus_image_tag }}"
-          imagePullPolicy: IfNotPresent
-          name: nexus
-          securityContext:
-            fsGroup: 1000340000
-          serviceAccount: "{{ _nexus_service_account }}"
-          ports:
-          - containerPort: 8081
-            protocol: TCP
-          - containerPort: 5000
-            protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8081
-              scheme: HTTP
-            initialDelaySeconds: 120
-            timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8081
-              scheme: HTTP
-            initialDelaySeconds: 120
-            timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-          resources:
-            requests:
-              cpu: "{{ _nexus_cpu_request }}"
-              memory: "{{ _nexus_memory_request }}"
-            limits:
-              cpu: "{{ _nexus_cpu_limit }}"
-              memory: "{{ _nexus_memory_limit }}"
-          volumeMounts:
-          - name: nexus-data
-            mountPath: /nexus-data
-        dnsPolicy: ClusterFirst
-        restartPolicy: Always
-        terminationGracePeriodSeconds: 30
-        volumes:
-        - name: nexus-data
-          persistentVolumeClaim:
-            claimName: "{{ _nexus_name }}-pvc"
-  register: nexus_pod_changed
-
 - name: Pause to wait for pod to be in the system
   when:
     - _nexus_state == "present"
@@ -182,6 +103,5 @@
 
 - name: Perform Initial Nexus Configuration
   include_tasks: setup.yml
-  when: nexus_pod_changed.method == "create"
   vars:
     nexus_url: "{{ 'http' if not _nexus_ssl|d(False)|bool else 'https' }}://{{ nexus_route.result.spec.host }}"

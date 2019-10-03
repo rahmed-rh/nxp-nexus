@@ -17,6 +17,7 @@ _nexus_image: registry.connect.redhat.com/sonatype/nexus-repository-manager
 _nexus_image_tag: latest
 
 _nexus_admin_password: admin123
+_new_nexus_admin_password: '{{ nexus_admin_password }}'
 _nexus_delete_default_repos: true
 
 _nexus_repos_maven_defaults:
