@@ -4,13 +4,13 @@ cd ssl_certs
 set -x
 
 #URL will be <service_name>-<project_name>.openshift_master_default_subdomain
-export URL=broker-amq-headless-amq7-raif.apps.box.it-speeltuin.nl
+export URL=nexus3-nexus.apps.openshift.testcluster.nxdi.nl-htc01.nxp.com
 export KEYSTORE=nexus-keystore
 export TRUSTSTORE_PASSWORD=passw0rd
 export KEYSTORE_PASSWORD=passw0rd
 
 
-keytool -genkey -noprompt -keyalg RSA -alias amq-broker -dname "CN=${URL}" -keystore $KEYSTORE.jks -storepass $KEYSTORE_PASSWORD -keypass $KEYSTORE_PASSWORD -deststoretype pkcs12
+keytool -genkey -noprompt -keyalg RSA -alias nexus -dname "CN=${URL}" -keystore $KEYSTORE.jks -storepass $KEYSTORE_PASSWORD -keypass $KEYSTORE_PASSWORD -deststoretype pkcs12
 
 
 keytool -export -alias nexus -keystore ${KEYSTORE}.jks -storepass $KEYSTORE_PASSWORD -file ${KEYSTORE}_cert.der
