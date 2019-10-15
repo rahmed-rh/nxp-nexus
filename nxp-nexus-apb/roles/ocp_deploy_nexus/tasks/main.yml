@@ -57,22 +57,7 @@
     state: "{{ _nexus_state }}"
     definition: "{{ lookup('template', './templates/nexus_route.j2') | from_yaml }}"
   register: nexus_route
-- name: Set Nexus PersistentVolumeClaim to {{ _nexus_state }}
-  k8s:
-    state: "{{ _nexus_state }}"
-    definition:
-      kind: PersistentVolumeClaim
-      apiVersion: v1
-      metadata:
-        name: "{{ _nexus_name }}-pvc"
-        namespace: "{{ _nexus_namespace }}"
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: "{{ _nexus_volume_size }}"
-
+  
 - name: Set Nexus Statefulset to {{ _nexus_state }}
   k8s:
     state: "{{ _nexus_state }}"
@@ -178,7 +163,7 @@
   k8s:
     api_version: v1
     kind: Pod
-    name: "{{ _nexus_name }}"
+    name: "{{ _nexus_name }}-0"
     namespace: "{{ _nexus_namespace }}"
   register: nexus_pod
   until:
