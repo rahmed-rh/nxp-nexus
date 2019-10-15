@@ -72,22 +72,21 @@
           requests:
             storage: "{{ _nexus_volume_size }}"
 
-- name: Set Nexus Depoyment to {{ _nexus_state }}
+- name: Set Nexus Statefulset to {{ _nexus_state }}
   k8s:
     state: "{{ _nexus_state }}"
     definition:
       apiVersion: apps/v1
-      kind: Deployment
+      kind: StatefulSet
       metadata:
         name: "{{ _nexus_name }}"
         namespace: "{{ _nexus_namespace }}"
-        labels:
-          app: "{{ _nexus_name }}"
       spec:
-        replicas: 1
+        serviceName: "{{ _nexus_name }}"
         selector:
           matchLabels:
             app: "{{ _nexus_name }}"
+        replicas: 1
         template:
           metadata:
             labels:
@@ -158,7 +157,7 @@
   k8s:
     api_version: v1
     kind: Pod
-    name: "{{ _nexus_name }}"
+    name: "{{ _nexus_name }}-0"
     namespace: "{{ _nexus_namespace }}"
   register: nexus_pod
   until:
