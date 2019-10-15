@@ -19,6 +19,7 @@
         labels:
           app: "{{ _nexus_name }}"
       spec:
+        clusterIP: None
         selector:
           app: "{{ _nexus_name }}"
         ports:
