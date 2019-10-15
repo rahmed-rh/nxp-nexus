@@ -1,5 +1,5 @@
 ---
-- name: Debug old parameters
+- name: Debug parameters
   debug:
     msg: "nexus_url: {{ nexus_url }}, script_name: {{ script_name }}, _nexus_admin_password: {{ _nexus_admin_password }}"
 - name: Calling Groovy script {{ script_name }}
