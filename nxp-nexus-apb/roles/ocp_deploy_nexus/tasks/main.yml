@@ -137,10 +137,14 @@
               dnsPolicy: ClusterFirst
               restartPolicy: Always
               terminationGracePeriodSeconds: 30
-              volumes:
-              - name: nexus-data
-                persistentVolumeClaim:
-                  claimName: "{{ _nexus_name }}-pvc"
+          volumeClaimTemplates:
+          - metadata:
+            name: nexus-data
+          spec:
+            accessModes: [ "ReadWriteOnce" ]
+            resources:
+              requests:
+                storage:  "{{ _nexus_volume_size }}"
   register: nexus_pod_changed
 
 - name: Pause to wait for pod to be in the system
