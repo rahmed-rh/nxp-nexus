@@ -1,4 +1,7 @@
 ---
+- name: Debug old parameters
+  debug:
+    msg: "nexus_url: {{ nexus_url }}, script_name: {{ script_name }}, _nexus_admin_password: {{ _nexus_admin_password }}"
 - name: Calling Groovy script {{ script_name }}
   uri:
     url: "{{ nexus_url }}/service/rest/v1/script/{{ script_name }}/run"
