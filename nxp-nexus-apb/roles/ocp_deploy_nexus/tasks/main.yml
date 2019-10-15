@@ -97,9 +97,9 @@
               - image: "{{ _nexus_image }}:{{ _nexus_image_tag }}"
                 imagePullPolicy: IfNotPresent
                 name: nexus
-		            securityContext: 
-		              supplementalGroups: [65534]
-			            fsGroup: 65534
+		securityContext: 
+		  supplementalGroups: [65534]
+		  fsGroup: 65534
                 ports:
                 - containerPort: 8081
                   protocol: TCP
