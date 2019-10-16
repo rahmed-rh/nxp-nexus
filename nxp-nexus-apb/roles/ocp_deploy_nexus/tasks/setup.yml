@@ -3,7 +3,7 @@
 
 # Discover admin password for 3.17+
 - name: Attempt to fetch password file
-  shell: "oc cp {{ _nexus_name }}:/nexus-data/admin.password /tmp/admin.password -n {{ _nexus_namespace }}"
+  shell: "oc cp {{ _nexus_pod_name }}:/nexus-data/admin.password /tmp/admin.password -n {{ _nexus_namespace }}"
   ignore_errors: true
 
 - name: Check for temporary file
