@@ -148,7 +148,7 @@
   k8s:
     api_version: v1
     kind: Pod
-    name: "{{ _nexus_name }}-0"
+    name: "{{ _nexus_pod_name }}"
     namespace: "{{ _nexus_namespace }}"
   register: nexus_pod
   until:
@@ -164,7 +164,7 @@
   k8s:
     api_version: v1
     kind: Pod
-    name: "{{ _nexus_name }}-0"
+    name: "{{ _nexus_pod_name }}"
     namespace: "{{ _nexus_namespace }}"
   register: nexus_pod
   until:
