@@ -3,6 +3,7 @@
 _nexus_state: '{{ nexus_state }}'
 _nexus_namespace: '{{ namespace }}'
 _nexus_name: nexus3
+_nexus_pod_name: '{{ _nexus_name }}-0'
 
 _nexus_service_account: '{{ nexus_service_account }}'
 _nexus_ssl: '{{ nexus_ssl }}'
